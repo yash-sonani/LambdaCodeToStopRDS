@@ -27,6 +27,13 @@ def lambda_handler(event, context):
         
         # If flag is True We need to stop Instance
         if flag1 :
-            Res = stop_db_instance(DBInstanceIdentifier = items['DBInstanceIdentifier'])
-            print('Response for Stop Call: ', Res)
+            
+            # To Stop RDS Cluster
+            if 'DBClusterIdentifier' in items:
+                Res = client.stop_db_cluster(DBClusterIdentifier=items['DBClusterIdentifier'])
+                print('Response for Cluster Stop Call: ', Res)
+            
+            else:
+                Res = stop_db_instance(DBInstanceIdentifier = items['DBInstanceIdentifier'])
+                print('Response for Instance Stop Call: ', Res)
  
